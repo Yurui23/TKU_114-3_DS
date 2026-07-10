@@ -1,0 +1,80 @@
+package week1_practice;
+
+import java.util.Scanner;
+
+public class PersonalProfileApp {
+
+    public static void main(String[] args) {
+        Scanner inputScanner = new Scanner(System.in);
+
+        System.out.print("請輸入姓名：");
+        String userName = inputScanner.nextLine();
+
+        int userAge = readPositiveInt(inputScanner, "請輸入年齡：");
+        double userHeight = readPositiveDouble(inputScanner, "請輸入身高 (公尺)：");
+        double userWeight = readPositiveDouble(inputScanner, "請輸入體重 (公斤)：");
+
+        double computedBmi = calculateBmi(userHeight, userWeight);
+        String bmiLevel = getBmiLevel(computedBmi);
+        boolean adultStatus = isAdult(userAge);
+
+        printReport(userName, userAge, adultStatus, userHeight, userWeight, computedBmi, bmiLevel);
+
+        inputScanner.close();
+    }
+
+    public static int readPositiveInt(Scanner sc, String message) {
+        int value = 0;
+        while (value <= 0) {
+            System.out.print(message);
+            value = sc.nextInt();
+            if (value <= 0) {
+                System.out.println("輸入不合法，數值必須大於 0，請重新輸入。");
+            }
+        }
+        return value;
+    }
+
+    public static double readPositiveDouble(Scanner sc, String message) {
+        double value = 0.0;
+        while (value <= 0) {
+            System.out.print(message);
+            value = sc.nextDouble();
+            if (value <= 0) {
+                System.out.println("輸入不合法，數值必須大於 0，請重新輸入。");
+            }
+        }
+        return value;
+    }
+
+    public static double calculateBmi(double height, double weight) {
+        return weight / (height * height);
+    }
+
+    public static String getBmiLevel(double bmi) {
+        if (bmi < 18.5) {
+            return "Underweight";
+        } else if (bmi < 24.0) {
+            return "Normal";
+        } else if (bmi < 27.0) {
+            return "Overweight";
+        } else {
+            return "Obese";
+        }
+    }
+
+    public static boolean isAdult(int age) {
+        return age >= 18;
+    }
+
+    public static void printReport(String name, int age, boolean adult, double height, double weight, double bmi, String level) {
+        System.out.println("\n=== Personal Health Report ===");
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("Adult: " + adult);
+        System.out.println("Height: " + height);
+        System.out.println("Weight: " + weight);
+        System.out.println("BMI: " + bmi);
+        System.out.println("Level: " + level);
+    }
+}
